@@ -25,5 +25,12 @@ namespace OSS.Crypto.Controllers
         {
             return await _transactionService.GetTransaction(txId);
         }
+
+
+        [HttpGet("feeEstimates")]
+        public async Task<FeeEstimatesResponse> GetFeeEstimates()
+        {
+            return await _transactionService.getFeeEstimates();
+        }
     }
 }

@@ -1,7 +1,10 @@
-﻿using OSS.Crypto.Models;
+﻿using Microsoft.AspNetCore.Http;
+using OSS.Crypto.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace OSS.Crypto.Services
@@ -9,10 +12,12 @@ namespace OSS.Crypto.Services
     public class TransactionService
     {
         private readonly BitcoinRpcClientService _client;
+        private readonly HttpClient _httpClient;
 
-        public TransactionService(BitcoinRpcClientService client)
+        public TransactionService(BitcoinRpcClientService client, HttpClient httpClient)
         {
             _client = client;
+            _httpClient = httpClient;
         }
 
         public async Task<TransactionResponse> GetTransaction(string txId)
@@ -38,10 +43,20 @@ namespace OSS.Crypto.Services
                 }
             }
 
-            var fee = vinValue - voutValue;
+            var fee = vinValue - voutValue;            
             
-
             return transaction;
         }
+
+
+        public async Task<FeeEstimatesResponse> getFeeEstimates()
+        {
+            var response = await _httpClient.GetAsync("https://api.blockcypher.com/v1/btc/test3");
+
+            var content = await response.Content.ReadAsStringAsync();
+
+            return JsonSerializer.Deserialize<FeeEstimatesResponse>(content);
+        }
+
     }
 }
