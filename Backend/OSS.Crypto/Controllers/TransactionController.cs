@@ -39,6 +39,13 @@ namespace OSS.Crypto.Controllers
             return await _transactionService.getBitcoinCurrentValue();
         }
 
+
+        [HttpGet("unconfirmed/{count}")]
+        public async Task<RawMempoolResponse> GetUnconfirmedTransactions(int count)
+        {
+            return await _transactionService.GetUnconfirmedTransactions(count);
+        }
+
     }
     
 }

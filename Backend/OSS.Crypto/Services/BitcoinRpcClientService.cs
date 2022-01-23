@@ -83,5 +83,12 @@ namespace OSS.Crypto.Services
             return JsonSerializer.Deserialize<DecodeScriptResponse>(response);            
         }
 
+        public async Task<RawMempoolResponse> GetUnconfirmedTransactions()
+        {
+            var response = await _blockchain.GetRawMempool();
+
+            return JsonSerializer.Deserialize<RawMempoolResponse>(response);
+        }
+
     }
 }

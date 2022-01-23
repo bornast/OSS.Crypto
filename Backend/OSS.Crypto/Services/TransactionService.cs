@@ -67,9 +67,9 @@ namespace OSS.Crypto.Services
             return JsonSerializer.Deserialize<Dictionary<string, BitcoinCurrentValueResponse>>(content);
         }
 
-        public async Task GetUnconfirmedTransactions(int count)
+        public async Task<RawMempoolResponse> GetUnconfirmedTransactions(int count)
         {
-
+            return await _client.GetUnconfirmedTransactions();
         }
 
     }
