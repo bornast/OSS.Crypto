@@ -21,32 +21,55 @@ namespace OSS.Crypto.Services
             _httpClient = httpClient;
         }
 
-        public async Task<TransactionResponse> GetTransaction(string txId)
+        public async Task<TransactionDetailDto> GetTransaction(string txId)
         {
+            var result = new TransactionDetailDto();
+            
             var transaction = await _client.GetTransaction(txId);
+
+            result.TxId = txId;
+            result.Size = transaction.result.size;
 
             double voutValue = 0;
             foreach (var vout in transaction.result.vout)
             {
+                var transactionDetailTransaction = new TransactionDetailTransaction
+                {
+                    Address = vout.scriptPubKey.addresses != null ? vout.scriptPubKey.addresses.First() : "",
+                    Value = vout.value
+                };
+
+                result.Output.Add(transactionDetailTransaction);                
                 voutValue += vout.value;
             }
 
             double vinValue = 0;
             foreach (var vinTx in transaction.result.vin)
             {
-                var decodedScript = await _client.DecodeScript(vinTx.scriptSig.hex);
+                var address = "";
+
+                if (vinTx.scriptSig != null)
+                {
+                    address = (await _client.DecodeScript(vinTx.scriptSig.hex)).result.segwit.addresses.First();
+                }
 
                 var newRawTransaction = await _client.GetTransaction(vinTx.txid);
 
-                foreach (var newVout in newRawTransaction.result.vout)
+                var val = newRawTransaction.result.vout[vinTx.vout].value;
+                vinValue += val;
+
+                var transactionDetailTransaction = new TransactionDetailTransaction
                 {
-                    vinValue += newVout.value;
-                }
+                    Address = address,
+                    Value = val
+                };
+
+                result.Input.Add(transactionDetailTransaction);
             }
+            
+            result.Fee = vinValue - voutValue;
 
-            var fee = vinValue - voutValue;
-
-            return transaction;
+            return result;
         }
 
         public async Task<FeeEstimateDto> getFeeEstimates()

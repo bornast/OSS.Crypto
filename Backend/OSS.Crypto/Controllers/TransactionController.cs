@@ -22,7 +22,7 @@ namespace OSS.Crypto.Controllers
         }
 
         [HttpGet("{txId}")]
-        public async Task<TransactionResponse> Get(string txId)
+        public async Task<TransactionDetailDto> Get(string txId)
         {
             return await _transactionService.GetTransaction(txId);
         }

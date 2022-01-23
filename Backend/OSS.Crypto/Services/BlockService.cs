@@ -73,6 +73,7 @@ namespace OSS.Crypto.Services
             result.MerkleRoot = block.result.merkleroot;
             result.Bits = block.result.bits;
             result.Version = block.result.version;
+            result.Confirmations = block.result.confirmations;
             result.Transactions = new List<BlockDetailTransactions>();
 
             foreach (var tx in block.result.tx)
@@ -99,6 +100,25 @@ namespace OSS.Crypto.Services
                     {
                         address = (await _client.DecodeScript(vin.scriptSig.hex)).result.segwit.addresses.First();
                     }
+
+                    double val = 0.0;
+
+                    if (vin.txid != null)
+                    {
+                        var newRawTransaction = await _client.GetTransaction(vin.txid);
+
+                        val = newRawTransaction.result.vout[(int)vin.vout].value;
+                    }
+                    else
+                    {
+                        val = tx.vout.Sum(x => x.value);
+                    }                                      
+
+                    var transactionDetailTransaction = new TransactionDetailTransaction
+                    {
+                        Address = address,
+                        Value = val
+                    };
 
                     var blockDetailTx = new BlockDetailTransaction
                     {

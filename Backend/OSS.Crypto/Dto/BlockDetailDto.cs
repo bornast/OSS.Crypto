@@ -14,6 +14,7 @@ namespace OSS.Crypto.Dto
         public string MerkleRoot { get; set; }
         public string Bits { get; set; }
         public int Version { get; set; }
+        public int Confirmations { get; set; }
         public List<BlockDetailTransactions> Transactions { get; set; }
     }
 
