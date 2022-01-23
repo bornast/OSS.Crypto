@@ -32,5 +32,13 @@ namespace OSS.Crypto.Controllers
         {
             return await _transactionService.getFeeEstimates();
         }
+
+        [HttpGet("currentValue")]
+        public async Task<Dictionary<string, BitcoinCurrentValueResponse>> GetBitcoinCurrentValue()
+        {
+            return await _transactionService.getBitcoinCurrentValue();
+        }
+
     }
+    
 }

@@ -43,8 +43,8 @@ namespace OSS.Crypto.Services
                 }
             }
 
-            var fee = vinValue - voutValue;            
-            
+            var fee = vinValue - voutValue;
+
             return transaction;
         }
 
@@ -56,6 +56,20 @@ namespace OSS.Crypto.Services
             var content = await response.Content.ReadAsStringAsync();
 
             return JsonSerializer.Deserialize<FeeEstimatesResponse>(content);
+        }
+
+        public async Task<Dictionary<string, BitcoinCurrentValueResponse>> getBitcoinCurrentValue()
+        {
+            var response = await _httpClient.GetAsync("https://blockchain.info/ticker");
+
+            var content = await response.Content.ReadAsStringAsync();
+
+            return JsonSerializer.Deserialize<Dictionary<string, BitcoinCurrentValueResponse>>(content);
+        }
+
+        public async Task GetUnconfirmedTransactions(int count)
+        {
+
         }
 
     }
