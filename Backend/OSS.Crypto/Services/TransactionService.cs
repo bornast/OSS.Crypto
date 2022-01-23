@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using OSS.Crypto.Dto;
 using OSS.Crypto.Models;
 using System;
 using System.Collections.Generic;
@@ -49,13 +50,21 @@ namespace OSS.Crypto.Services
         }
 
 
-        public async Task<FeeEstimatesResponse> getFeeEstimates()
+        public async Task<FeeEstimateDto> getFeeEstimates()
         {
             var response = await _httpClient.GetAsync("https://api.blockcypher.com/v1/btc/test3");
 
             var content = await response.Content.ReadAsStringAsync();
 
-            return JsonSerializer.Deserialize<FeeEstimatesResponse>(content);
+            var feeEstimate = JsonSerializer.Deserialize<FeeEstimatesResponse>(content);
+
+            
+            return new FeeEstimateDto
+            {
+                HighPriority = ((double)(((int)Math.Ceiling(feeEstimate.high_fee_per_kb / 1000.0)) * 1000)) / 100000000,
+                MediumPriority = ((double)(((int)Math.Ceiling(feeEstimate.medium_fee_per_kb / 1000.0)) * 1000)) / 100000000,
+                LowPriority = ((double)(((int)Math.Ceiling(feeEstimate.low_fee_per_kb / 1000.0)) * 1000)) / 100000000
+            };
         }
 
         public async Task<Dictionary<string, BitcoinCurrentValueResponse>> getBitcoinCurrentValue()
@@ -67,9 +76,57 @@ namespace OSS.Crypto.Services
             return JsonSerializer.Deserialize<Dictionary<string, BitcoinCurrentValueResponse>>(content);
         }
 
-        public async Task<RawMempoolResponse> GetUnconfirmedTransactions(int count)
+        public async Task<List<UnconfirmedTransactionDto>> GetUnconfirmedTransactions(int count)
         {
-            return await _client.GetUnconfirmedTransactions();
+            var unconfirmedTransactions = await _client.GetUnconfirmedTransactions();
+
+            var result = new List<UnconfirmedTransactionDto>();
+
+            var feeEstimates = await getFeeEstimates();
+
+            foreach (var unconfirmedTransaction in unconfirmedTransactions.result)
+            {
+                var btcKb = unconfirmedTransaction.Value.fee / unconfirmedTransaction.Value.vsize / 1024;
+
+                var priority = "low";
+
+                if (btcKb >= feeEstimates.HighPriority)
+                {
+                    priority = "high";
+                }
+                else if (btcKb >= feeEstimates.MediumPriority)
+                {
+                    priority = "medium";
+                }
+
+                var time = (DateTimeOffset.Now - DateTimeOffset.FromUnixTimeSeconds(unconfirmedTransaction.Value.time)).Minutes;
+
+                var timeString = "";
+                
+                if (time == 0)
+                {
+                    timeString = "Less than a minute";
+                }
+                else
+                {
+                    timeString = time + " minute ago";
+                }
+
+                var tx = new UnconfirmedTransactionDto
+                {
+                    TransactionHash = unconfirmedTransaction.Key,
+                    Fee = unconfirmedTransaction.Value.fee,
+                    Priority = priority,
+                    Time = timeString,
+                    dateTime = DateTimeOffset.FromUnixTimeSeconds(unconfirmedTransaction.Value.time)
+                };
+
+                result.Add(tx);
+
+            }
+
+
+            return result.OrderByDescending(x => x.dateTime).Take(count).ToList();
         }
 
     }

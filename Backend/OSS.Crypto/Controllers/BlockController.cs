@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using OSS.Crypto.Dto;
 using OSS.Crypto.Models;
 using OSS.Crypto.Services;
 using System;
@@ -21,7 +22,7 @@ namespace OSS.Crypto.Controllers
         }
 
         [HttpGet("getNewestBlocks/{count}")]
-        public async Task<List<BlockResponse>> getNewestBlocks(int count)
+        public async Task<List<BlockListDto>> getNewestBlocks(int count)
         {
             return await _blockService.GetBlocks(count);
         }

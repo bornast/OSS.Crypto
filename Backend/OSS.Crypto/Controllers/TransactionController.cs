@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using OSS.Crypto.Dto;
 using OSS.Crypto.Models;
 using OSS.Crypto.Services;
 using System;
@@ -28,7 +29,7 @@ namespace OSS.Crypto.Controllers
 
 
         [HttpGet("feeEstimates")]
-        public async Task<FeeEstimatesResponse> GetFeeEstimates()
+        public async Task<FeeEstimateDto> GetFeeEstimates()
         {
             return await _transactionService.getFeeEstimates();
         }
@@ -41,7 +42,7 @@ namespace OSS.Crypto.Controllers
 
 
         [HttpGet("unconfirmed/{count}")]
-        public async Task<RawMempoolResponse> GetUnconfirmedTransactions(int count)
+        public async Task<List<UnconfirmedTransactionDto>> GetUnconfirmedTransactions(int count)
         {
             return await _transactionService.GetUnconfirmedTransactions(count);
         }
