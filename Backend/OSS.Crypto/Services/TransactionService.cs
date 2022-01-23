@@ -49,7 +49,6 @@ namespace OSS.Crypto.Services
             return transaction;
         }
 
-
         public async Task<FeeEstimateDto> getFeeEstimates()
         {
             var response = await _httpClient.GetAsync("https://api.blockcypher.com/v1/btc/test3");

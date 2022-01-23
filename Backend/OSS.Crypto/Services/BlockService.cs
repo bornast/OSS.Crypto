@@ -33,7 +33,7 @@ namespace OSS.Crypto.Services
 
                 foreach (var tx in block.result.tx)
                 {
-                    totalSent = tx.vout.Sum(x => x.value);
+                    totalSent += tx.vout.Sum(x => x.value);
                 }                
 
                 var blockList = new BlockListDto
@@ -53,9 +53,67 @@ namespace OSS.Crypto.Services
             return result2;
         }
 
-        public async Task<BlockResponse> GetBlock(int height)
-        {            
-            return await _client.GetBlock(height);
+        public async Task<BlockDetailDto> GetBlock(int height)
+        {         
+            var block = await _client.GetBlock(height);
+
+            var result = new BlockDetailDto();
+
+
+            result.Timestamp = DateTimeOffset.FromUnixTimeSeconds(block.result.time).ToString();
+            double totalSent = 0.0;
+
+            foreach (var tx in block.result.tx)
+            {
+                totalSent += tx.vout.Sum(x => x.value);
+            }
+            result.TotalTransacted = totalSent;
+            result.Size = block.result.size;
+            result.Nonce = block.result.nonce;
+            result.MerkleRoot = block.result.merkleroot;
+            result.Bits = block.result.bits;
+            result.Version = block.result.version;
+            result.Transactions = new List<BlockDetailTransactions>();
+
+            foreach (var tx in block.result.tx)
+            {
+                var blockDetailTransaction = new BlockDetailTransactions();
+                var input = new List<BlockDetailTransaction>();
+                var output = new List<BlockDetailTransaction>();
+
+                foreach (var vou in tx.vout)
+                {
+                    var blockDetailTx = new BlockDetailTransaction
+                    {
+                        Address = vou.scriptPubKey.addresses != null ? vou.scriptPubKey.addresses.First() : "NULL data transaction",
+                        Value = vou.value
+                    };
+                    output.Add(blockDetailTx);
+                }
+
+                foreach (var vin in tx.vin)
+                {
+                    var address = "";
+
+                    if (vin.scriptSig != null)
+                    {
+                        address = (await _client.DecodeScript(vin.scriptSig.hex)).result.segwit.addresses.First();
+                    }
+
+                    var blockDetailTx = new BlockDetailTransaction
+                    {
+                        Address = address,
+                        Value = tx.vout.Sum(x => x.value)
+                    };
+                    input.Add(blockDetailTx);
+                }
+
+                blockDetailTransaction.Input = input;
+                blockDetailTransaction.Output = output;
+                result.Transactions.Add(blockDetailTransaction);
+            }
+
+            return result;
         }
 
     }

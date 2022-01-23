@@ -28,7 +28,7 @@ namespace OSS.Crypto.Controllers
         }
 
         [HttpGet("{height}")]
-        public async Task<BlockResponse> Get(int height)
+        public async Task<BlockDetailDto> Get(int height)
         {
             return await _blockService.GetBlock(height);
         }
