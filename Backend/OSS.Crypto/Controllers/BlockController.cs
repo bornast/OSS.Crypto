@@ -20,10 +20,16 @@ namespace OSS.Crypto.Controllers
             _blockService = blockService;
         }
 
-        [HttpGet("list/{count}")]
-        public async Task<List<BlockResponse>> Get(int count)
+        [HttpGet("getNewestBlocks/{count}")]
+        public async Task<List<BlockResponse>> getNewestBlocks(int count)
         {
             return await _blockService.GetBlocks(count);
+        }
+
+        [HttpGet("{height}")]
+        public async Task<BlockResponse> Get(int height)
+        {
+            return await _blockService.GetBlock(height);
         }
     }
 }

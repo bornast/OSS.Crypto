@@ -29,5 +29,10 @@ namespace OSS.Crypto.Services
             return result;
         }
 
+        public async Task<BlockResponse> GetBlock(int height)
+        {            
+            return await _client.GetBlock(height);
+        }
+
     }
 }
