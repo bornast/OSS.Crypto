@@ -1,3 +1,119 @@
-<p>
-  home works!
-</p>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">BlockExplorer</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarColor03">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link active" href="home">Home
+            <span class="visually-hidden">(current)</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Mempool</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Currency Exchange</a>
+        </li>
+      </ul>
+      <form class="d-flex">
+        <input class="form-control me-sm-2" type="text" placeholder="Search Block">
+        <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+      </form>
+      <form class="d-flex">
+        <input class="form-control me-sm-2" type="text" placeholder="Search Transaction">
+        <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+      </form>
+    </div>
+  </div>
+</nav>
+
+<br>
+<br>
+<br>
+<div class="container">
+  <div class="row">
+    <h3 style="margin-left:-8px;">Recent Blocks</h3>
+    <br>
+    <br>
+    <table class="table table-hover">
+      <thead>
+        <tr class="table-primary">
+          <th scope="col">Height</th>
+          <th scope="col">Timestamp</th>
+          <th scope="col">Transactions</th>
+          <th scope="col">Total Sent</th>
+          <th scope="col">Block Size (Bytes)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let block of blocks">
+          <td scope="row">{{block.height}}</td>
+          <td scope="row">{{block.timestamp}}</td>
+          <td scope="row">{{block.transactions}}</td>
+          <td scope="row">{{block.totalSent}}</td>
+          <td scope="row">{{block.blockSize}}</td>
+        </tr>        
+      </tbody>
+    </table>
+  </div>
+
+  <br>
+  <br>
+  <div class="row">
+    <h3 style="margin-left:-8px;">Current Fee Estimates</h3>
+    <br>
+    <br>
+    <table class="table table-hover">
+      <thead>
+        <tr class="table-success">
+          <th scope="col">High Priority</th>
+          <th scope="col">Medium Priority</th>
+          <th scope="col">Low Priority</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td scope="row">{{feeEstimate.highPriority}}</td>
+          <td scope="row">{{feeEstimate.mediumPriority}}</td>
+          <td scope="row">{{feeEstimate.lowPriority}}</td>
+        </tr>        
+      </tbody>
+    </table>
+  </div>
+
+  <br>
+  <br>
+  <div class="row">
+    <h3 style="margin-left:-8px;">Unconfirmed Transactions</h3>
+    <br>
+    <br>
+    <table class="table table-hover">
+      <thead>
+        <tr class="table-info">
+          <th scope="col">Transaction Hash</th>
+          <th scope="col">Fee</th>
+          <th scope="col">Timestamp</th>
+          <th scope="col">Priority</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let unconfirmedTransaction of unconfirmedTransactions">
+          <td scope="row">{{unconfirmedTransaction.transactionHash}}</td>
+          <td scope="row">{{unconfirmedTransaction.fee}}</td>
+          <td scope="row">{{unconfirmedTransaction.time}}</td>
+          <td scope="row">{{unconfirmedTransaction.priority}}</td>
+        </tr>        
+      </tbody>
+    </table>
+  </div>
+
+  <br>
+  <br>
+  <br>
+  <br>
+
+</div>
