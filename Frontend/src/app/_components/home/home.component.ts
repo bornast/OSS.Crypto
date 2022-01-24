@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Block } from 'src/app/models/Block';
 import { FeeEstimate } from 'src/app/models/FeeEstimate';
 import { UnconfirmedTransaction } from 'src/app/models/UnconfirmedTransaction';
@@ -15,7 +16,7 @@ export class HomeComponent implements OnInit {
   unconfirmedTransactions: UnconfirmedTransaction[];
   feeEstimate: FeeEstimate;
 
-  constructor(private blockchainService: BlockchainService) { }
+  constructor(private blockchainService: BlockchainService, private router: Router) { }
 
   ngOnInit() {
     this.loadBlocks();
@@ -51,6 +52,11 @@ export class HomeComponent implements OnInit {
       }, error => {
         console.log('error loading fee estimates');
       });
+  }
+
+  searchBlock() {
+    var blockHeight = ((document.getElementById("blockHeightSearch") as HTMLInputElement).value);
+    this.router.navigate(['block/' + blockHeight]);
   }
 
 }

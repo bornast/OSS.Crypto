@@ -20,8 +20,8 @@
         </li>
       </ul>
       <form class="d-flex">
-        <input class="form-control me-sm-2" type="text" placeholder="Search Block">
-        <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+        <input id="blockHeightSearch" class="form-control me-sm-2" type="text" placeholder="Search Block">
+        <button (click)="searchBlock()" class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
       </form>
       <form class="d-flex">
         <input class="form-control me-sm-2" type="text" placeholder="Search Transaction">
@@ -51,7 +51,7 @@
       </thead>
       <tbody>
         <tr *ngFor="let block of blocks">
-          <td scope="row">{{block.height}}</td>
+          <td scope="row"><a href="block/{{block.height}}">{{block.height}}</a></td>
           <td scope="row">{{block.timestamp}}</td>
           <td scope="row">{{block.transactions}}</td>
           <td scope="row">{{block.totalSent}}</td>

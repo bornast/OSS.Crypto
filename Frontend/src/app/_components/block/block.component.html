@@ -36,18 +36,64 @@
 <br>
 <br>
 <div class="container" *ngIf="block">
+
+  <table class="table table-hover">    
+    <tbody>      
+      <tr>
+        <th scope="row">Height</th>
+        <td>{{height}}</td>
+      </tr>
+      <tr>
+        <th scope="row">Merkle Root</th>
+        <td>{{block.merkleRoot}}</td>
+      </tr>
+      <tr>
+        <th scope="row">Confirmations</th>
+        <td>{{block.confirmations}}</td>
+      </tr>
+      <tr>
+        <th scope="row">Bits</th>
+        <td>{{block.bits}}</td>
+      </tr>
+      <tr>
+        <th scope="row">Nonce</th>
+        <td>{{block.nonce}}</td>
+      </tr>
+      <tr>
+        <th scope="row">Size</th>
+        <td>{{block.size}}</td>
+      </tr>
+      <tr>
+        <th scope="row">Timestamp</th>
+        <td>{{block.timestamp}}</td>
+      </tr>
+      <tr>
+        <th scope="row">Total Transacted</th>
+        <td>{{block.totalTransacted}}</td>
+      </tr>
+      <tr>
+        <th scope="row">Version</th>
+        <td>{{block.version}}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <br>
+  <br>
   <div class="row" *ngFor="let transaction of block.transactions">
     <div class="col-md-5">
-      <div class="col-md-12" *ngFor="let input of transaction.input">
-        <div>Address: {{input.address}}</div>
-        <div>Value: {{input.value}}</div>
+      <div class="alert alert-dismissible alert-success" *ngFor="let input of transaction.input">
+        <h4 style="font-size: 15px;" class="alert-heading">Address {{input.address == "" ? "from Block Reward" : input.address}}</h4>
+        <p class="mb-0">Value: {{input.value}}</p>
       </div>
     </div>
-    <div class="col-md-2">--></div>
+    <div class="col-md-2">
+      <div style="background: url('https://live.blockcypher.com/static/img/txn_arrow.svg') center no-repeat;min-height: 150px;" class="txn-arrow"></div>
+    </div>
     <div class="col-md-5">
-      <div class="col-md-12" *ngFor="let output of transaction.output">
-        <div>Address: {{output.address}}</div>
-        <div>Value: {{output.value}}</div>
+      <div class="alert alert-dismissible alert-info" *ngFor="let output of transaction.output">
+        <h4 style="font-size: 15px;" class="alert-heading">Address {{output.address}}</h4>
+        <p class="mb-0">Value: {{output.value}}</p>
       </div>
     </div>
     <hr>
