@@ -1,0 +1,64 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">BlockExplorer</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarColor03">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="home">Home
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="mempool">Mempool
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link active" href="currency">Currency Exchange
+            <span class="visually-hidden">(current)</span>
+          </a>
+        </li>
+      </ul>
+      <form class="d-flex">
+        <input class="form-control me-sm-2" type="text" placeholder="Search Block">
+        <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+      </form>
+      <form class="d-flex">
+        <input class="form-control me-sm-2" type="text" placeholder="Search Transaction">
+        <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+      </form>
+    </div>
+  </div>
+</nav>
+
+
+<br>
+<br>
+<div class="container">
+  <form>
+      <legend>Currency Exchange</legend>
+
+      <div class="form-group">
+        <label for="exampleSelect1" class="form-label mt-4">Currency</label>
+        <select class="form-select" id="exampleSelect1" [(ngModel)]="selectedOption" name="currencySelect">
+          <option *ngFor="let currency of currenciesMap | keyvalue" value="{{currency.key}}">{{currency.key}}</option>          
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="exampleInputEmail1" class="form-label mt-4">BTC</label>
+        <input [(ngModel)]="btcValue" name="btcValueName" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+      </div>
+      
+      <br>
+      <button (click)="convert()" type="submit" class="btn btn-primary">Submit</button>
+
+      <br>
+      <div class="form-group" *ngIf="convertedValue">
+        <label for="exampleInputEmail1" class="form-label mt-4">Converted value</label>
+        <input name="convertedValueName" [(ngModel)]="convertedValue" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+      </div>
+  </form>
+</div>

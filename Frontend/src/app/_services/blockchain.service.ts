@@ -6,6 +6,7 @@ import { UnconfirmedTransaction } from '../models/UnconfirmedTransaction';
 import { FeeEstimate } from '../models/FeeEstimate';
 import { BlockDetail } from '../models/BlockDetail';
 import { TransactionDetail } from '../models/TransactionDetail';
+import { Currency } from '../models/Currency';
 
 @Injectable({
   providedIn: 'root'
@@ -37,4 +38,7 @@ export class BlockchainService {
       return this.http.get<TransactionDetail>(this.baseUrl + 'Transaction/' + txId);
     }
 
+    getCurrency(): Observable<Currency> {
+      return this.http.get<Currency>(this.baseUrl + 'Transaction/currentValue');
+    }
 }
