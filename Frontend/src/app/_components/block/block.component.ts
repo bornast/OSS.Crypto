@@ -34,4 +34,14 @@ export class BlockComponent implements OnInit {
     });
   }
 
+  searchBlock() {
+    var blockHeight = ((document.getElementById("blockHeightSearch") as HTMLInputElement).value);
+    this.router.navigate(['block/' + blockHeight]);
+  }
+
+  searchTransaction() {
+    var txId = ((document.getElementById("transactionIdSearch") as HTMLInputElement).value);
+    this.router.navigate(['transaction/' + txId]);
+  }
+
 }

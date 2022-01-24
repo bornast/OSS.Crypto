@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Currency } from 'src/app/models/Currency';
 import { BlockchainService } from 'src/app/_services/blockchain.service';
 
@@ -15,7 +16,7 @@ export class CurrencyComponent implements OnInit {
   btcValue: number;
   selectedOption: string;
 
-  constructor(private blockchainService: BlockchainService) { }
+  constructor(private blockchainService: BlockchainService, private router: Router) { }
 
   ngOnInit() {
     this.loadCurrencies();
@@ -43,6 +44,16 @@ export class CurrencyComponent implements OnInit {
         this.convertedValue = this.btcValue * val;
       }
     }
+  }
+
+  searchBlock() {
+    var blockHeight = ((document.getElementById("blockHeightSearch") as HTMLInputElement).value);
+    this.router.navigate(['block/' + blockHeight]);
+  }
+
+  searchTransaction() {
+    var txId = ((document.getElementById("transactionIdSearch") as HTMLInputElement).value);
+    this.router.navigate(['transaction/' + txId]);
   }
 
 }

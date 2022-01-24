@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { UnconfirmedTransaction } from 'src/app/models/UnconfirmedTransaction';
 import { BlockchainService } from 'src/app/_services/blockchain.service';
 
@@ -12,7 +13,7 @@ export class MempoolComponent implements OnInit {
   unconfirmedTransactions: UnconfirmedTransaction[];
   interval: any;
 
-  constructor(private blockchainService: BlockchainService) { }
+  constructor(private blockchainService: BlockchainService, private router: Router) { }
 
   ngOnInit() {
     this.loadUnconfirmedTransactions();
@@ -36,6 +37,16 @@ export class MempoolComponent implements OnInit {
       }, error => {
         console.log('error loading unconfirmed transactions');
       });
+  }
+
+  searchBlock() {
+    var blockHeight = ((document.getElementById("blockHeightSearch") as HTMLInputElement).value);
+    this.router.navigate(['block/' + blockHeight]);
+  }
+
+  searchTransaction() {
+    var txId = ((document.getElementById("transactionIdSearch") as HTMLInputElement).value);
+    this.router.navigate(['transaction/' + txId]);
   }
 
 }
