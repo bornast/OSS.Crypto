@@ -19,7 +19,7 @@ export class BlockComponent implements OnInit {
 
     this.route.params.subscribe(params => {
       if (params['height'] != null) {
-        this.height = +params['height'];
+        this.height = params['height'];
         this.blockchainService.getBlock(this.height).subscribe( block => {
           if (block == null) {
             this.router.navigate(['/']);

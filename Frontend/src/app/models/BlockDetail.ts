@@ -9,5 +9,7 @@ export class BlockDetail {
   bits: string;
   version: number;
   confirmations: number;
+  hash: string;
+  height: number;
   transactions: BlockDetailTransactions[]
 }

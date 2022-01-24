@@ -37,10 +37,14 @@
 <div class="container" *ngIf="block">
 
   <table class="table table-hover">    
-    <tbody>      
+    <tbody>
+      <tr>
+        <th scope="row">Hash</th>
+        <td>{{block.hash}}</td>
+      </tr>
       <tr>
         <th scope="row">Height</th>
-        <td>{{height}}</td>
+        <td>{{block.height}}</td>
       </tr>
       <tr>
         <th scope="row">Merkle Root</th>

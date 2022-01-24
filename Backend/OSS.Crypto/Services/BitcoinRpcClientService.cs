@@ -66,7 +66,6 @@ namespace OSS.Crypto.Services
 
         public async Task<TransactionResponse> GetTransaction(string txId)
         {
-            // 0ecd4754cb25ea5d60f695e54f47e0afd9c3c6dfa73c596197e7f805ff0bb6c1
             string rawTransactionResponse = await _rawTransaction.GetRawTransaction(txId);
 
             var rawTransactionResponseObj = JsonSerializer.Deserialize<RawTransactionResponse>(rawTransactionResponse);

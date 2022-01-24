@@ -15,6 +15,8 @@ namespace OSS.Crypto.Dto
         public string Bits { get; set; }
         public int Version { get; set; }
         public int Confirmations { get; set; }
+        public string Hash { get; set; }
+        public int Height { get; set; }
         public List<BlockDetailTransactions> Transactions { get; set; }
     }
 

@@ -30,8 +30,12 @@ export class BlockchainService {
       return this.http.get<FeeEstimate>(this.baseUrl + 'Transaction/feeEstimates');
     }
 
-    getBlock(height: number): Observable<BlockDetail> {
-      return this.http.get<BlockDetail>(this.baseUrl + 'Block/' + height);
+    getBlock(param: any): Observable<BlockDetail> {
+      if (this.isNumeric(param)) {
+        return this.http.get<BlockDetail>(this.baseUrl + 'Block/' + param);
+      } else {
+        return this.http.get<BlockDetail>(this.baseUrl + 'Block/hash/' + param);
+      }            
     }
 
     getTransaction(txId: string): Observable<TransactionDetail> {
@@ -40,5 +44,9 @@ export class BlockchainService {
 
     getCurrency(): Observable<Currency> {
       return this.http.get<Currency>(this.baseUrl + 'Transaction/currentValue');
+    }
+
+    isNumeric(val: any): boolean {
+      return !(val instanceof Array) && (val - parseFloat(val) + 1) >= 0;
     }
 }

@@ -32,5 +32,11 @@ namespace OSS.Crypto.Controllers
         {
             return await _blockService.GetBlock(height);
         }
+
+        [HttpGet("hash/{hash}")]
+        public async Task<BlockDetailDto> Get(string hash)
+        {
+            return await _blockService.GetBlock(hash);
+        }
     }
 }
