@@ -35,25 +35,34 @@
 <br>
 <br>
 <br>
-<div class="container" *ngIf="block">
-  <div class="row" *ngFor="let transaction of block.transactions">
-    <div class="col-md-5">
-      <div class="col-md-12" *ngFor="let input of transaction.input">
-        <div>Address: {{input.address}}</div>
-        <div>Value: {{input.value}}</div>
-      </div>
-    </div>
-    <div class="col-md-2">--></div>
-    <div class="col-md-5">
-      <div class="col-md-12" *ngFor="let output of transaction.output">
-        <div>Address: {{output.address}}</div>
-        <div>Value: {{output.value}}</div>
-      </div>
-    </div>
-    <hr>
+<div class="container">
+  <div class="row">
+    <h3 style="margin-left:-8px;">Mempool</h3>
     <br>
     <br>
-    <br>
-  </div>    
+    <table class="table table-hover">
+      <thead>
+        <tr class="table-info">
+          <th scope="col">Transaction Hash</th>
+          <th scope="col">Fee</th>
+          <th scope="col">Timestamp</th>
+          <th scope="col">Priority</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let unconfirmedTransaction of unconfirmedTransactions">
+          <td scope="row">{{unconfirmedTransaction.transactionHash}}</td>
+          <td scope="row">{{unconfirmedTransaction.fee}}</td>
+          <td scope="row">{{unconfirmedTransaction.time}}</td>
+          <td scope="row">{{unconfirmedTransaction.priority}}</td>
+        </tr>        
+      </tbody>
+    </table>
+  </div>
+
+  <br>
+  <br>
+  <br>
+  <br>
 
 </div>

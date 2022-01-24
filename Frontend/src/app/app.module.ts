@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { AppRoutes } from './app.routing';
 import { BlockComponent } from './_components/block/block.component';
 import { HomeComponent } from './_components/home/home.component';
+import { MempoolComponent } from './_components/mempool/mempool.component';
 import { TransactionComponent } from './_components/transaction/transaction.component';
 
 @NgModule({
@@ -15,6 +16,7 @@ import { TransactionComponent } from './_components/transaction/transaction.comp
     AppComponent,
     BlockComponent,
     TransactionComponent,
+    MempoolComponent,
     HomeComponent
   ],
   imports: [

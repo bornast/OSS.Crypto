@@ -13,7 +13,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Mempool</a>
+          <a class="nav-link" href="mempool">Mempool</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Currency Exchange</a>
@@ -35,7 +35,7 @@
 <br>
 <br>
 <div class="container">
-  <div class="row">
+  <div class="row" *ngIf="blocks">
     <h3 style="margin-left:-8px;">Recent Blocks</h3>
     <br>
     <br>
@@ -63,7 +63,7 @@
 
   <br>
   <br>
-  <div class="row">
+  <div class="row" *ngIf="feeEstimate">
     <h3 style="margin-left:-8px;">Current Fee Estimates</h3>
     <br>
     <br>
@@ -87,7 +87,7 @@
 
   <br>
   <br>
-  <div class="row">
+  <div class="row" *ngIf="unconfirmedTransactions">
     <h3 style="margin-left:-8px;">Unconfirmed Transactions</h3>
     <br>
     <br>
