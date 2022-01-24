@@ -51,7 +51,7 @@
       </thead>
       <tbody>
         <tr *ngFor="let unconfirmedTransaction of unconfirmedTransactions">
-          <td scope="row">{{unconfirmedTransaction.transactionHash}}</td>
+          <td scope="row"><a href="transaction/{{unconfirmedTransaction.transactionHash}}">{{unconfirmedTransaction.transactionHash}}</a></td>
           <td scope="row">{{unconfirmedTransaction.fee}}</td>
           <td scope="row">{{unconfirmedTransaction.time}}</td>
           <td scope="row">{{unconfirmedTransaction.priority}}</td>

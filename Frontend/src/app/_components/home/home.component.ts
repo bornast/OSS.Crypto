@@ -59,4 +59,9 @@ export class HomeComponent implements OnInit {
     this.router.navigate(['block/' + blockHeight]);
   }
 
+  searchTransaction() {
+    var txId = ((document.getElementById("transactionIdSearch") as HTMLInputElement).value);
+    this.router.navigate(['transaction/' + txId]);
+  }
+
 }

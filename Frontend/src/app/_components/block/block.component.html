@@ -12,8 +12,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="mempool">Mempool
-            <span class="visually-hidden">(current)</span>
+          <a class="nav-link" href="mempool">Mempool
           </a>
         </li>
         <li class="nav-item">
@@ -81,6 +80,11 @@
   <br>
   <br>
   <div class="row" *ngFor="let transaction of block.transactions">
+    <div class="col-md-12">
+      <div class="alert alert-dismissible alert-warning">
+        <h4 style="font-size: 15px; text-align: center;" class="alert-heading"><a href="transaction/{{transaction.transactionId}}">{{transaction.transactionId}}</a></h4>
+      </div>
+    </div>
     <div class="col-md-5">
       <div class="alert alert-dismissible alert-success" *ngFor="let input of transaction.input">
         <h4 style="font-size: 15px;" class="alert-heading">Address {{input.address == "" ? "from Block Reward" : input.address}}</h4>

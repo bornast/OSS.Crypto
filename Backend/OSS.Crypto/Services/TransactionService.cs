@@ -35,7 +35,7 @@ namespace OSS.Crypto.Services
             {
                 var transactionDetailTransaction = new TransactionDetailTransaction
                 {
-                    Address = vout.scriptPubKey.addresses != null ? vout.scriptPubKey.addresses.First() : "",
+                    Address = vout.scriptPubKey.addresses != null ? vout.scriptPubKey.addresses.First() : "NULL data transaction",
                     Value = vout.value
                 };
 
@@ -53,9 +53,19 @@ namespace OSS.Crypto.Services
                     address = (await _client.DecodeScript(vinTx.scriptSig.hex)).result.segwit.addresses.First();
                 }
 
-                var newRawTransaction = await _client.GetTransaction(vinTx.txid);
+                double val = 0.0;
 
-                var val = newRawTransaction.result.vout[vinTx.vout].value;
+                if (vinTx.txid != null)
+                {
+                    var newRawTransaction = await _client.GetTransaction(vinTx.txid);
+
+                    val = newRawTransaction.result.vout[vinTx.vout].value;
+                }
+                else
+                {
+                    val = transaction.result.vout.Sum(x => x.value);
+                }
+                
                 vinValue += val;
 
                 var transactionDetailTransaction = new TransactionDetailTransaction

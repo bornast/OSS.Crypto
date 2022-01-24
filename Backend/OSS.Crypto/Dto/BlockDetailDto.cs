@@ -20,6 +20,7 @@ namespace OSS.Crypto.Dto
 
     public class BlockDetailTransactions
     {
+        public string TransactionId { get; set; }
         public List<BlockDetailTransaction> Input { get; set; }
         public List<BlockDetailTransaction> Output { get; set; }
     }

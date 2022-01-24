@@ -6,7 +6,7 @@ import { TransactionComponent } from "./_components/transaction/transaction.comp
 
 export const AppRoutes: Routes = [
     { path: 'block/:height', component: BlockComponent },
-    { path: 'transaction/:id', component: TransactionComponent },
+    { path: 'transaction/:txId', component: TransactionComponent },
     { path: 'mempool', component: MempoolComponent },
     { path: 'home', component: HomeComponent },
     { path: '', component: HomeComponent }

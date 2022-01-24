@@ -5,6 +5,7 @@ import { Block } from '../models/Block';
 import { UnconfirmedTransaction } from '../models/UnconfirmedTransaction';
 import { FeeEstimate } from '../models/FeeEstimate';
 import { BlockDetail } from '../models/BlockDetail';
+import { TransactionDetail } from '../models/TransactionDetail';
 
 @Injectable({
   providedIn: 'root'
@@ -30,6 +31,10 @@ export class BlockchainService {
 
     getBlock(height: number): Observable<BlockDetail> {
       return this.http.get<BlockDetail>(this.baseUrl + 'Block/' + height);
+    }
+
+    getTransaction(txId: string): Observable<TransactionDetail> {
+      return this.http.get<TransactionDetail>(this.baseUrl + 'Transaction/' + txId);
     }
 
 }

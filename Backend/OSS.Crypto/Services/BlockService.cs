@@ -79,6 +79,7 @@ namespace OSS.Crypto.Services
             foreach (var tx in block.result.tx)
             {
                 var blockDetailTransaction = new BlockDetailTransactions();
+                blockDetailTransaction.TransactionId = tx.txid;
                 var input = new List<BlockDetailTransaction>();
                 var output = new List<BlockDetailTransaction>();
 

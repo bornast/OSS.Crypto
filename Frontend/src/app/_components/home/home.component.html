@@ -24,8 +24,8 @@
         <button (click)="searchBlock()" class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
       </form>
       <form class="d-flex">
-        <input class="form-control me-sm-2" type="text" placeholder="Search Transaction">
-        <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+        <input id="transactionIdSearch" class="form-control me-sm-2" type="text" placeholder="Search Transaction">
+        <button (click)="searchTransaction()" class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
       </form>
     </div>
   </div>
@@ -102,7 +102,7 @@
       </thead>
       <tbody>
         <tr *ngFor="let unconfirmedTransaction of unconfirmedTransactions">
-          <td scope="row">{{unconfirmedTransaction.transactionHash}}</td>
+          <td scope="row"><a href="transaction/{{unconfirmedTransaction.transactionHash}}">{{unconfirmedTransaction.transactionHash}}</a></td>
           <td scope="row">{{unconfirmedTransaction.fee}}</td>
           <td scope="row">{{unconfirmedTransaction.time}}</td>
           <td scope="row">{{unconfirmedTransaction.priority}}</td>
